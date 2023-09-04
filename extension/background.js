@@ -31,7 +31,7 @@ async function removeAllDupes() {
 
 async function sortAllTabsAndMergeWindows() {
     let tabs = await chrome.tabs.query(tabQueryOpts);
-    let mainWindowId = tabs[tabs.length - 1].windowId
+    let mainWindowId = tabs.find(t => t.active)?.windowId??tabs[0].windowId
 
     tabs.sort((a, b) =>
         collator.compare(a.url.replace(new RegExp("www", ""), ""),
