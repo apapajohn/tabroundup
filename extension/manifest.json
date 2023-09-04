@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "One-Click Tab Herder",
+  "version": "1.0",
+  "icons": {
+    "48": "images/herd-icon-48.png",
+    "128": "images/herd-icon-128.png",
+    "676": "images/herd-icon-676.png"
+  },
+  "action": {
+    "default_title": "Click to herd tabs"
+  },
+  "host_permissions": ["https://*/*"],
+  "permissions": ["tabGroups", "tabs"],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
