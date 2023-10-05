@@ -1,9 +1,8 @@
 
 const collator = new Intl.Collator();
 const tabQueryOpts = {
-    url: [
-        'https://*/*',
-    ]
+
+    windowType: "normal"
 }
 chrome.action.onClicked.addListener(async (event) => {
     await sortAllTabsAndMergeWindows()

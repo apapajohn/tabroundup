@@ -6,12 +6,11 @@
   "icons": {
     "48": "images/herd-icon-48.png",
     "128": "images/herd-icon-128.png",
-    "676": "images/herd-icon-676.png"
+    "650": "images/herd-icon-650.png"
   },
   "action": {
     "default_title": "Click to organize your tabs"
   },
-  "host_permissions": ["https://*/*"],
   "permissions": ["tabGroups", "tabs"],
   "background": {
     "service_worker": "background.js"
