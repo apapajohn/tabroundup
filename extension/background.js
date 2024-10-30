@@ -1,9 +1,14 @@
 
 const collator = new Intl.Collator();
 const tabQueryOpts = {
-
     windowType: "normal"
 }
+
+const tabQueryActiveWindowOpts = {
+    active: true,
+    lastFocusedWindow: true
+}
+
 chrome.action.onClicked.addListener(async (event) => {
     await sortAllTabsAndMergeWindows()
     groupTabs().then()
@@ -30,8 +35,8 @@ async function removeAllDupes() {
 
 async function sortAllTabsAndMergeWindows() {
     let tabs = await chrome.tabs.query(tabQueryOpts);
-    let mainWindowId = tabs.find(t => t.active)?.windowId??tabs[0].windowId
-
+    let activeWindowTab = await await chrome.tabs.query(tabQueryActiveWindowOpts);
+    let mainWindowId = activeWindowTab[0].windowId ?? tabs[0].windowId;
     tabs.sort((a, b) =>
         collator.compare(a.url.replace(new RegExp("www", ""), ""),
             b.url.replace(new RegExp("www", ""), ""))
@@ -41,7 +46,6 @@ async function sortAllTabsAndMergeWindows() {
         await chrome.tabs.move(tab.id, {index: i, windowId: mainWindowId})
     )
 }
-
 async function groupTabs() {
     let tabs = await chrome.tabs.query(tabQueryOpts);
 
