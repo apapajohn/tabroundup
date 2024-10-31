@@ -10,50 +10,49 @@ const tabQueryActiveWindowOpts = {
 }
 
 chrome.action.onClicked.addListener(async (event) => {
-    await sortAllTabsAndMergeWindows()
-    groupTabs().then()
+    let tabs = await chrome.tabs.query(tabQueryOpts);
+    await sortAllTabsAndMergeWindows(tabs)
+    await groupTabs(tabs)
 });
 
 /**
- * This would be nice, but it goes by url only, so could blow away someone's work in a form or app
- * @returns {Promise<void>}
+ * Find dupes, return them as a set of IDs
+ *
  */
-async function removeAllDupes() {
+function findDupes(tabs) {
     let setTabs = new Set();
-    let tabDupeIds = []
+    let setDupeIds = new Set();
 
-    let tabs = await chrome.tabs.query(tabQueryOpts);
-    tabs.forEach((tab, i) => {
+     tabs.forEach((tab, i) => {
         if (setTabs.has(tab.url)) {
-            tabDupeIds.push(tab.id)
+            setDupeIds.add(tab.id)
         } else {
             setTabs.add(tab.url)
         }
     })
-    await chrome.tabs.remove(tabDupeIds)
+    return setDupeIds;
 }
 
-async function sortAllTabsAndMergeWindows() {
-    let tabs = await chrome.tabs.query(tabQueryOpts);
+async function sortAllTabsAndMergeWindows(tabs) {
     let activeWindowTab = await await chrome.tabs.query(tabQueryActiveWindowOpts);
     let mainWindowId = activeWindowTab[0].windowId ?? tabs[0].windowId;
-    tabs.sort((a, b) =>
-        collator.compare(a.url.replace(new RegExp("www", ""), ""),
-            b.url.replace(new RegExp("www", ""), ""))
+    tabs.sort((a, b) => {
+             return collator.compare(a.url.replace(new RegExp("https*...(www\.)*", ""), ""),
+                b.url.replace(new RegExp("https*...(www\.)*", ""), ""))
+        }
     );
 
     tabs.forEach(async (tab, i) =>
         await chrome.tabs.move(tab.id, {index: i, windowId: mainWindowId})
     )
 }
-async function groupTabs() {
-    let tabs = await chrome.tabs.query(tabQueryOpts);
-
+async function groupTabs(tabs) {
+    let setDupeIds = findDupes(tabs);
     //group tabs only if the window is running out of room
     if (tabs.length < 15) return
 
     let groups = tabs.reduce(function (m, tab) {
-        let domain = tab.url.replace(/http.+\/\//, '').replace(/\/.*/, '')
+        let domain = setDupeIds.has(tab.id) ? "dupes" : tab.url.replace(/http.+\/\//, '').replace(/\/.*/, '')
         if (!m.has(domain)) {
             m.set(domain, [])
         }
@@ -63,7 +62,7 @@ async function groupTabs() {
 
     for (let e of groups.keys()) {
         let tabGroup = groups.get(e)
-        if (tabGroup.length > 1) {
+        if (tabGroup.length > 1 || e === "dupes") {
             let groupTitle = e.replace(/www./, '').replace(/\..+$/, '')
             let options = {tabIds: tabGroup.map(t => t.id)}
             let tabGroups = await chrome.tabGroups.query({title: groupTitle})
