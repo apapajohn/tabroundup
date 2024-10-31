@@ -47,9 +47,10 @@ async function sortAllTabsAndMergeWindows(tabs) {
     )
 }
 async function groupTabs(tabs) {
-    let setDupeIds = findDupes(tabs);
     //group tabs only if the window is running out of room
     if (tabs.length < 15) return
+
+    let setDupeIds = findDupes(tabs);
 
     let groups = tabs.reduce(function (m, tab) {
         let domain = setDupeIds.has(tab.id) ? "dupes" : tab.url.replace(/http.+\/\//, '').replace(/\/.*/, '')
