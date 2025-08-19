@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TabRoundup Options</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 2em;
+      }
+      .option-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1em;
+      }
+      .option-row label {
+        margin-left: 0.5em;
+      }
+      #status {
+        margin-top: 1em;
+        color: green;
+      }
+      #save {
+        margin-top: 1em;
+        padding: 0.5em 1.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="option-row">
+      <input type="checkbox" id="mergeWindows" checked />
+      <label for="mergeWindows">Merge windows</label>
+    </div>
+    <div class="option-row">
+      <input type="checkbox" id="deleteDuplicateTabs" />
+      <label for="deleteDuplicateTabs">Delete duplicate tabs</label>
+    </div>
+    <div id="status"></div>
+    <button id="save">Save</button>
+    <script src="options.js"></script>
+  </body>
+</html>

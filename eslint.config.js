@@ -21,7 +21,8 @@ export default defineConfig([
          globals: {
         chrome: "readonly",
         document: "readonly",
-        alert: "readonly"
+        alert: "readonly",
+        setTimeout: "readonly"
       }
     }
   }

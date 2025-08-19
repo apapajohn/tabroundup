@@ -10,8 +10,12 @@
   "action": {
     "default_title": "Click to organize your tabs"
   },
-  "permissions": ["tabGroups", "tabs"],
+  "permissions": ["tabGroups", "tabs", "storage"],
   "background": {
     "service_worker": "background.js"
+  },
+   "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
   }
 }
