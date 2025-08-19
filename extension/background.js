@@ -36,8 +36,8 @@ async function sortAllTabsAndMergeWindows(tabs) {
     const activeWindowTab =  await chrome.tabs.query(tabQueryActiveWindowOpts);
     const mainWindowId = activeWindowTab[0].windowId ?? tabs[0].windowId;
     tabs.sort((a, b) => {
-             return collator.compare(a.url.replace(new RegExp("https*...(www\.)*"), ""),
-                b.url.replace(new RegExp("https*...(www\.)*"), ""));
+             return collator.compare(a.url.replace(/https*...(www\.)*/, ""),
+                b.url.replace(/https*...(www\.)*/, ""));
         }
     );
 
