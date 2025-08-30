@@ -18,16 +18,14 @@
       #status {
         margin-top: 1em;
         color: green;
-      }
-      #save {
-        margin-top: 1em;
-        padding: 0.5em 1.5em;
+        height: 16px; /* Set fixed height */
+        overflow: hidden; /* Prevent content overflow */
       }
     </style>
   </head>
   <body>
     <div class="option-row">
-      <input type="checkbox" id="mergeWindows" checked />
+      <input type="checkbox" id="mergeWindows" />
       <label for="mergeWindows">Merge windows</label>
     </div>
     <div class="option-row">
@@ -62,7 +60,6 @@
       </label>
     </div>
     <div id="status"></div>
-    <button id="save">Save</button>
     <script src="options.js"></script>
   </body>
 </html>

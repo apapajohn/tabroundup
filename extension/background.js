@@ -12,14 +12,10 @@ const tabQueryActiveWindowOpts = {
 chrome.action.onClicked.addListener(async () => {
     const tabs = await chrome.tabs.query(tabQueryOpts);
     chrome.storage.sync.get(
-        { mergeWindows: undefined, deleteDuplicateTabs: undefined },
+        { mergeWindows: true, deleteDuplicateTabs: false },
         async (options) => {
-            const optionsWithDefaults = {
-                deleteDuplicateTabs: options.deleteDuplicateTabs ?? false,
-                mergeWindows: options.mergeWindows ?? true
-            };
-            await sortAllTabsAndMergeWindows(tabs, optionsWithDefaults);
-            await groupTabs(tabs, optionsWithDefaults);
+            await sortAllTabsAndMergeWindows(tabs, options);
+            await groupTabs(tabs, options);
         }
     );
 });

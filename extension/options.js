@@ -29,4 +29,5 @@ const restoreOptions = () => {
 };
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
-document.getElementById('save').addEventListener('click', saveOptions);
+document.getElementById('mergeWindows').addEventListener('change', saveOptions);
+document.getElementById('deleteDuplicateTabs').addEventListener('change', saveOptions);
