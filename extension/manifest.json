@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "One-Click Tab Round Up",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "In one click, merge your tabs into one window, sort them, and if they're crowded, group them.",
   "icons": {
     "48": "images/herd-icon-48.png",
@@ -10,8 +10,12 @@
   "action": {
     "default_title": "Click to organize your tabs"
   },
-  "permissions": ["tabGroups", "tabs"],
+  "permissions": ["tabGroups", "tabs", "storage"],
   "background": {
     "service_worker": "background.js"
+  },
+   "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
   }
 }
