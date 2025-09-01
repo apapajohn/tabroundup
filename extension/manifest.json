@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "One-Click Tab Round Up",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "In one click, merge your tabs into one window, sort them, and if they're crowded, group them.",
   "icons": {
     "48": "images/herd-icon-48.png",
