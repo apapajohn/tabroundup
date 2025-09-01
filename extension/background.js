@@ -65,7 +65,7 @@ async function groupTabs(allTabs, options) {
     }, new Map());
 
     //group tabs only if the window is running out of room
-    tabMap.forEach(async (tabs, windowId) => {
+    tabMap.forEach(async (tabs) => {
         if (tabs.length < minTabs) return;
 
         const setDupeIds = findDupes(tabs);
@@ -78,7 +78,6 @@ async function groupTabs(allTabs, options) {
             });
             setDupeIds.clear();
         }
-
         const groups = tabs.reduce(function (m, tab) {
             let domain = setDupeIds.has(tab.id) ? "dupes" : tab.url.replace(/http.+\/\//, '').replace(/\/.*/, '');
             if (!m.has(domain)) {
